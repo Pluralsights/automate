@@ -34,7 +34,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Automate extends Application
 {
-    const VERSION = '0.0.1';
+    const VERSION = '0.0.1-DEV';
 
     private static $logo = "
      _         _                        _
@@ -65,7 +65,13 @@ class Automate extends Application
         $this->context->setStrategiesManager($this->getStrategiesManager());
         $this->context->setApp($this);
 
-        parent::__construct('Automate', self::VERSION);
+        $version = static::VERSION;
+
+        if ('@'.'git-commit@' !== $commit = '@git-commit@') {
+            $version .= ' ('.substr($commit, 0, 7).')';
+        }
+
+        parent::__construct('Automate', $version);
     }
 
     /**

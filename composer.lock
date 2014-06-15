@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "9a6ee881a8f3541383d30a98f42b3876",
+    "hash": "1f6ab5f290e5277b8571190d1b29a6b4",
     "packages": [
         {
             "name": "phpseclib/phpseclib",
@@ -102,7 +102,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.3.15",
+            "version": "v2.3.16",
             "target-dir": "Symfony/Component/Config",
             "source": {
                 "type": "git",
@@ -152,7 +152,7 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.3.15",
+            "version": "v2.3.16",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
@@ -207,17 +207,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.4.5",
+            "version": "v2.5.0",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "a3af8294bcce4a7c1b2892363b0c9d8109affad4"
+                "reference": "98e831eac836a0a5911626ce82684155f21d0e4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a3af8294bcce4a7c1b2892363b0c9d8109affad4",
-                "reference": "a3af8294bcce4a7c1b2892363b0c9d8109affad4",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/98e831eac836a0a5911626ce82684155f21d0e4d",
+                "reference": "98e831eac836a0a5911626ce82684155f21d0e4d",
                 "shasum": ""
             },
             "require": {
@@ -226,7 +226,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -252,11 +252,11 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2014-04-16 10:34:31"
+            "time": "2014-04-16 10:36:21"
         },
         {
             "name": "symfony/finder",
-            "version": "v2.3.15",
+            "version": "v2.3.16",
             "target-dir": "Symfony/Component/Finder",
             "source": {
                 "type": "git",
@@ -304,57 +304,8 @@
             "time": "2014-05-22 13:42:36"
         },
         {
-            "name": "symfony/serializer",
-            "version": "v2.3.15",
-            "target-dir": "Symfony/Component/Serializer",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/Serializer.git",
-                "reference": "3bbc004993296679f0cd2d5969a57394d57d1700"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Serializer/zipball/3bbc004993296679f0cd2d5969a57394d57d1700",
-                "reference": "3bbc004993296679f0cd2d5969a57394d57d1700",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\Serializer\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Serializer Component",
-            "homepage": "http://symfony.com",
-            "time": "2014-04-18 20:35:25"
-        },
-        {
             "name": "symfony/yaml",
-            "version": "v2.3.15",
+            "version": "v2.3.16",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",

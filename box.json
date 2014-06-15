@@ -1,0 +1,25 @@
+{
+    "output": "build/automate.phar",
+    "chmod": "0755",
+    "compactors": [
+        "Herrera\\Box\\Compactor\\Php"
+    ],
+    "extract": false,
+    "files": [
+        "LICENSE"
+    ],
+    "finder": [
+        {
+            "name": ["*.php", "*.yml"],
+            "in": ["src"]
+        },
+        {
+            "name": ["*.php"],
+            "exclude": ["Tests", "tests", "phpunit"],
+            "in": ["vendor"]
+        }
+    ],
+    "git-commit": "git-commit",
+    "stub": "src/Automate/Resources/phar-stub.php",
+    "web": false
+}
