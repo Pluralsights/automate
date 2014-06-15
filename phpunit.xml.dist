@@ -4,11 +4,11 @@
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
     stopOnFailure="false"
-    bootstrap="test/bootstrap.php"
+    bootstrap="tests/bootstrap.php"
 >
     <testsuites>
         <testsuite name="Automate">
-            <directory>test/</directory>
+            <directory>tests/</directory>
         </testsuite>
     </testsuites>
 
