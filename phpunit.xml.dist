@@ -1,0 +1,28 @@
+<phpunit
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    stopOnFailure="false"
+    bootstrap="test/bootstrap.php"
+>
+    <testsuites>
+        <testsuite name="Automate">
+            <directory>test/</directory>
+        </testsuite>
+    </testsuites>
+
+    <logging>
+        <log type="coverage-html" target="coverage" />
+    </logging>
+
+    <filter>
+        <whitelist>
+            <directory>src/Automate</directory>
+            <exclude>
+                <directory>src/Automate/Resources</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+</phpunit>

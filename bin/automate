@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+if (PHP_SAPI !== 'cli') {
+    echo 'Warning: Automate should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;
+}
+
+require __DIR__.'/../src/bootstrap.php';
+
+use Automate\Automate;
+
+error_reporting(-1);
+
+if (function_exists('ini_set')) {
+    @ini_set('display_errors', 1);
+}
+
+$automate = new Automate;
+$automate->run();

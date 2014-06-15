@@ -1,0 +1,20 @@
+remotes:
+    serveur1:
+        host: 'ssh.exemple.com'
+        user: 'user'
+#        rsa: '/path/to/cert.rsa' or password: '*******'
+        groups: 'web'
+        master: true
+
+deployment:
+    group: 'web'
+    from:  './'
+    to: '/path/to/project'
+#    excludes:
+#        - 'tests'
+#    shared:
+#        - 'upload'
+
+#    hooks:
+#        on_deploy:
+#            - { name: 'remote:run', params: { command: 'ls', group: 'web' } }
