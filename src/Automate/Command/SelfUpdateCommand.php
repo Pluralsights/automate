@@ -48,10 +48,14 @@ EOT
         preg_match('/\((.*?)\)/', $this->getApplication()->getLongVersion(), $match);
         $localVersion = isset($match[1]) ? $match[1] : '';
 
+        if(!$localVersion) {
+            $output->writeln('<error>This command is only compatible with PHAR installation.</error>');
+            return;
+        }
+
         if (false !== $remoteVersion = @file_get_contents('https://github.com/julienj/automate/raw/master/build/version')) {
             if ($localVersion == $remoteVersion) {
                 $output->writeln('<info>Automate is already up to date.</info>');
-
                 return;
             }
         }
