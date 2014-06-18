@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+passthru('box build');
+
+$version = exec('php ' . dirname(__DIR__) . '/build/automate.phar --version');
+preg_match('/\((.*?)\)/', $version, $match);
+
+if(!isset($match[1])) {
+    throw new Exception("Build error");
+}
+
+$file = fopen(dirname(__DIR__) . '/build/version', 'r+');
+fseek($file, 0);
+fputs($file, $match[1]);
+fclose($file);
