@@ -2,3 +2,4 @@
 .idea
 coverage
 vendor
+docs/_build/*
