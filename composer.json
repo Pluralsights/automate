@@ -16,6 +16,7 @@
             "Automate": "src/"
         }
     },
+    "bin": ["bin/automate"],
     "license": "MIT",
     "authors": [
         {
