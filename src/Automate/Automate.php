@@ -21,6 +21,7 @@ use Automate\Local\Local;
 use Automate\Remote\RemotesManager;
 use Automate\Strategy\Ftp;
 use Automate\Strategy\StrategiesManager;
+use Automate\Strategy\TarGz;
 use Automate\Task\Repository\LocalTasks;
 use Automate\Task\Repository\RemoteTasks;
 use Automate\Task\TasksManager;
@@ -96,6 +97,7 @@ class Automate extends Application
         $manager = new StrategiesManager();
         $manager->setContext($this->context);
         $manager->add(new Ftp());
+        $manager->add(new TarGz());
 
         return $manager;
     }

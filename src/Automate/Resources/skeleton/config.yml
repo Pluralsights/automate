@@ -10,6 +10,7 @@ deployment:
     group: 'web'
     from:  './'
     to: '/path/to/project'
+    strategy: 'ftp'
 #    excludes:
 #        - 'tests'
 #    shared:

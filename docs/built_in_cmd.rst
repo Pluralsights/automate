@@ -62,7 +62,7 @@ Configuration options :
         symlink_dir: 'current' # current folder name
         releases_dir: 'releases' # releases folder name
         shared_dir: 'shared' # shared folder name
-        strategy : 'ftp'
+        strategy : 'ftp' # ftp or targz
         excludes: # list of items to exclude from deployment
             - '.idea'
             - 'vendor'

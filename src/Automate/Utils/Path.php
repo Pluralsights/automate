@@ -10,15 +10,57 @@
  */
 
 namespace Automate\Utils;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Path utils
  *
  * @package Gaufrette
  * @author  Antoine Hérault <antoine.herault@gmail.com>
+ * @author  Julien Jacottet <jjacottet@gmail.com>
  */
 class Path
 {
+
+    /**
+     * Get iterator form dir
+     * @param string $dir
+     * @param array  $excludes
+     *
+     * @return Finder
+     */
+    public static function getFilesList($dir, $excludes = array())
+    {
+
+        $ignore = array_map(function ($pattern) {
+            $pattern = preg_quote($pattern, '#');
+            $pattern = str_replace('\*', '(.*?)', $pattern);
+            $pattern = "#$pattern#";
+
+            return $pattern;
+        }, $excludes);
+
+        $finder = new Finder();
+        $files = $finder
+            ->files()
+            ->ignoreUnreadableDirs()
+            ->ignoreVCS(true)
+            ->ignoreDotFiles(false)
+            ->filter(function (\SplFileInfo $file) use ($ignore) {
+                foreach ($ignore as $pattern) {
+                    if (preg_match($pattern, $file->getRealPath())) {
+                        return false;
+                    }
+                }
+
+                return true;
+            })
+            ->in($dir)
+        ;
+
+        return $files;
+    }
+
     /**
      * Normalizes the given path
      *

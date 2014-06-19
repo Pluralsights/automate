@@ -13,6 +13,7 @@ namespace Automate\Task\Repository;
 
 use Automate\Command\Helper\DialogHelper;
 use Automate\Context\ContextAware;
+use Automate\Exception\RemoteException;
 use Automate\Remote\Remote;
 use Automate\Task\TaskRepositoryInterface;
 use Automate\Utils\Path;
@@ -135,7 +136,7 @@ class RemoteTasks extends ContextAware implements TaskRepositoryInterface
      * @param array  $group
      * @param array  $excludes
      *
-     * @throws \RemoteException
+     * @throws RemoteException
      */
     public function upload($from, $to, $group = null, $excludes = array())
     {
@@ -151,31 +152,7 @@ class RemoteTasks extends ContextAware implements TaskRepositoryInterface
             }
         } elseif (is_dir($from)) {
 
-            $ignore = array_map(function ($pattern) {
-                $pattern = preg_quote($pattern, '#');
-                $pattern = str_replace('\*', '(.*?)', $pattern);
-                $pattern = "#$pattern#";
-
-                return $pattern;
-            }, $excludes);
-
-            $finder = new Finder();
-            $files = $finder
-                ->files()
-                ->ignoreUnreadableDirs()
-                ->ignoreVCS(true)
-                ->ignoreDotFiles(false)
-                ->filter(function (\SplFileInfo $file) use ($ignore) {
-                    foreach ($ignore as $pattern) {
-                        if (preg_match($pattern, $file->getRealPath())) {
-                            return false;
-                        }
-                    }
-
-                    return true;
-                })
-                ->in($from)
-            ;
+            $files = Path::getFilesList($from, $excludes);
 
             foreach ($remotes as $remote) {
                 $output->writeln(sprintf('<info>[%s]</info> Uploading <info>%s</info> to <info>%s</info>', $remote->getHost(), $from, $to));
@@ -200,7 +177,7 @@ class RemoteTasks extends ContextAware implements TaskRepositoryInterface
             }
 
         } else {
-            throw new \RemoteException("Uploading path '$from' does not exist.");
+            throw new RemoteException("Uploading path '$from' does not exist.");
         }
     }
 

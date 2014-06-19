@@ -108,6 +108,8 @@ class DeployCommand extends BaseCommand
         $sharedDir = $remoteBasePath . '/' . $confDeployment['shared_dir'];
         $currentDir = $remoteBasePath . '/' . $confDeployment['symlink_dir'];
 
+        array_push($confDeployment['excludes'], '.automate');
+
         /*
          * ssh connection
          */
