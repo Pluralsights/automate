@@ -50,7 +50,7 @@ class DeployCommand extends BaseCommand
                 ->arrayNode('deployment')
                 ->ignoreExtraKeys()
                     ->children()
-                        ->scalarNode('group')->end()
+                        ->scalarNode('group')->isRequired()->end()
                         ->scalarNode('from')->defaultValue('./')->end()
                         ->scalarNode('to')->isRequired()->end()
                         ->integerNode('max_release')->defaultValue(5)->min(2)->max(50)->end()

@@ -13,6 +13,7 @@ namespace Automate;
 
 use Automate\Command\DeployCommand;
 use Automate\Command\InitCommand;
+use Automate\Command\PrepareCommand;
 use Automate\Command\SelfUpdateCommand;
 use Automate\Command\UnlockCommand;
 use Automate\Context\Context;
@@ -124,6 +125,7 @@ class Automate extends Application
         $commands[] = new UnlockCommand();
         $commands[] = new InitCommand();
         $commands[] = new SelfUpdateCommand();
+        $commands[] = new PrepareCommand();
         return $commands;
     }
 
