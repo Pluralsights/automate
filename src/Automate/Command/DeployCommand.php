@@ -212,10 +212,14 @@ class DeployCommand extends BaseCommand
     {
         $dialog = $this->getDialogHelper();
 
-        $dialog->writeSubSection($this->context->getOutput(), sprintf('Run %s tasks', $name));
-
         $conf = $this->getConfiguration();
         $tasks = $conf['deployment']['hooks'][$name];
+
+        if(!count($tasks)) {
+            return;
+        }
+
+        $dialog->writeSubSection($this->context->getOutput(), sprintf('Run %s tasks', $name));
 
         foreach ($tasks as $task) {
             $this->context->getOutput()->writeln(sprintf('Run %s task', $task['name']));

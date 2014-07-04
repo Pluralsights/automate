@@ -81,4 +81,19 @@ class DialogHelper extends BaseDialogHelper
         ));
     }
 
+    /**
+     * Write cmd return
+     *
+     * @param OutputInterface $output
+     * @param string          $text
+     */
+    public function writeReturn(OutputInterface $output, $text)
+    {
+        $output->writeln(array(
+            '',
+            $this->getHelperSet()->get('formatter')->formatBlock($text, 'bg=cyan;fg=black'),
+            '',
+        ));
+    }
+
 }

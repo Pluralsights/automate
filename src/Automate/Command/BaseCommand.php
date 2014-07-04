@@ -53,6 +53,11 @@ class BaseCommand extends Command implements ContextAwareInterface
     {
         $this->context->setInput($input);
         $this->context->setOutput($output);
+
+        $dialog = $this->getHelperSet()->get('dialog');
+        if (!$dialog || get_class($dialog) !== 'Automate\Command\Helper\DialogHelper') {
+            $this->getHelperSet()->set($dialog = new DialogHelper());
+        }
     }
 
     /**
@@ -60,12 +65,7 @@ class BaseCommand extends Command implements ContextAwareInterface
      */
     protected function getDialogHelper()
     {
-        $dialog = $this->getHelperSet()->get('dialog');
-        if (!$dialog || get_class($dialog) !== 'Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper') {
-            $this->getHelperSet()->set($dialog = new DialogHelper());
-        }
-
-        return $dialog;
+        return $this->getHelperSet()->get('dialog');
     }
 
     /**

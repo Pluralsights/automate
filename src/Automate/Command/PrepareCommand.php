@@ -113,7 +113,7 @@ class PrepareCommand extends BaseCommand
     protected function mkdir($path, $group)
     {
         $this->context->getTasksManager()->run('remote:run', array(
-            'command' => sprintf('test ! -e %s && mkdir %s', $path, $path),
+            'command' => sprintf('test ! -e %s && mkdir -p %s', $path, $path),
             'group'   => $group
         ));
     }

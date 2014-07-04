@@ -54,6 +54,10 @@ class TarGz extends ContextAware implements StrategyInterface
             $filePath = substr($file->getRealPath(), strlen($basePath));
             $filePath = ltrim($filePath, '\/ ');
 
+            if(!$filePath) {
+                continue;
+            }
+
             if($file->isDir()) {
                 $tar->addEmptyDir($filePath);
             } else {

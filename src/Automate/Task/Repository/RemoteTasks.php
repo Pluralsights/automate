@@ -18,7 +18,6 @@ use Automate\Remote\Remote;
 use Automate\Task\TaskRepositoryInterface;
 use Automate\Utils\Path;
 use Automate\Utils\Remote\Key;
-use Symfony\Component\Finder\Finder;
 
 /**
  * @author Julien Jacottet <jjacottet@gmail.com>
@@ -45,13 +44,11 @@ class RemoteTasks extends ContextAware implements TaskRepositoryInterface
      */
     public function connect($host, $user, $password = null, $groups = array(), $isMaster = false)
     {
-        $dialog = new DialogHelper();
-
         $this->context->getOutput()->writeln(sprintf('Connect to  <comment>%s@%s (%s)</comment>', $user, $host, implode(', ', $groups)));
         if (!$password) {
-            $password = $dialog->askHiddenResponse($this->context->getOutput(), sprintf('Password for %s@%s ? ', $user, $host));
+            $password = $this->getDialog()->askHiddenResponse($this->context->getOutput(), sprintf('Password for %s@%s ? ', $user, $host));
         } elseif ($password instanceof Key) {
-            $passPhrase = $dialog->askHiddenResponse($this->context->getOutput(), sprintf('RSA passphrase for %s@%s ? ', $user, $host));
+            $passPhrase = $this->getDialog()->askHiddenResponse($this->context->getOutput(), sprintf('RSA passphrase for %s@%s ? ', $user, $host));
             $password = rsa($password, $passPhrase);
         }
 
@@ -104,7 +101,7 @@ class RemoteTasks extends ContextAware implements TaskRepositoryInterface
             $this->context->getOutput()->writeln(sprintf('<info>[%s]</info> run <comment>%s</comment>', $remote->getHost(), $command));
             $rs = $remote->execute($command);
             if ($rs) {
-                $this->context->getOutput()->writeln($rs);
+                $this->getDialog()->writeReturn($this->context->getOutput(), $rs);
             }
         }
     }
@@ -121,7 +118,7 @@ class RemoteTasks extends ContextAware implements TaskRepositoryInterface
         $this->context->getOutput()->writeln(sprintf('<info>[%s]</info> run <comment>%s</comment>', $remote->getHost(), $command));
         $rs = $remote->execute($command);
         if ($rs) {
-            $this->context->getOutput()->writeln($rs);
+            $this->getDialog()->writeReturn($this->context->getOutput(), $rs);
         }
 
         return $rs;
@@ -140,9 +137,41 @@ class RemoteTasks extends ContextAware implements TaskRepositoryInterface
      */
     public function upload($from, $to, $group = null, $excludes = array())
     {
-        $output = $this->context->getOutput();
         $remotes = $this->context->getRemoteManager()->getGroup($group);
+        $this->_upload($from, $to, $remotes, $excludes);
+    }
 
+    /**
+     * Upload files to master remote
+     *
+     * @param $from
+     * @param $to
+     * @param array $excludes
+     */
+    public function uploadMaster($from, $to, $excludes = array())
+    {
+        $remotes = array($this->context->getRemoteManager()->getMaster());
+        $this->_upload($from, $to, $remotes, $excludes);
+
+    }
+
+    public function download($from, $to, $host = null)
+    {
+
+    }
+
+    /**
+     * Upload Files
+     *
+     * @param string $from
+     * @param string $to
+     * @param array $remotes
+     * @param array $excludes
+     * @throws \Automate\Exception\RemoteException
+     */
+    private function _upload($from, $to, $remotes = array(), $excludes = array())
+    {
+        $output = $this->context->getOutput();
         $from = Path::normalize(realpath($from));
 
         if (is_file($from) && is_readable($from)) {
@@ -171,24 +200,16 @@ class RemoteTasks extends ContextAware implements TaskRepositoryInterface
                     $remote->uploadFile($fromFile, $toFile);
                     $progress->advance();
                 }
-
                 $progress->finish();
-
             }
-
         } else {
             throw new RemoteException("Uploading path '$from' does not exist.");
         }
     }
 
-    public function uploadMaster($from, $to)
+    protected function getDialog()
     {
-
-    }
-
-    public function download($from, $to, $host = null)
-    {
-
+        return $this->context->getApp()->getHelperSet()->get('dialog');
     }
 
 }
