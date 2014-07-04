@@ -37,4 +37,24 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(Path::isAbsolute('protocol://home/path'));
     }
 
+    public function testGetFilesList()
+    {
+        $fixtureFolder = dirname(dirname(__FILE__)) . '/Fixtures/folder';
+
+        $list = Path::getFilesList($fixtureFolder);
+        $this->assertEquals(5, $list->count());
+
+        $list = Path::getFilesList($fixtureFolder, array('folder2'));
+        $this->assertEquals(3, $list->count());
+
+        $list = Path::getFilesList($fixtureFolder, array('file1'));
+        $this->assertEquals(4, $list->count());
+
+        $list = Path::getFilesList($fixtureFolder, array('folder2/*'));
+        $this->assertEquals(4, $list->count());
+
+        $list = Path::getFilesList($fixtureFolder, array('folder2/file2'));
+        $this->assertEquals(4, $list->count());
+    }
+
 }

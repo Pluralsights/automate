@@ -3,3 +3,4 @@
 coverage
 vendor
 docs/_build/*
+phpunit.xml

@@ -10,8 +10,10 @@
  */
 
 namespace Automate\Strategy;
+
 use Automate\Context\ContextAware;
 use Automate\Utils\Path;
+use Symfony\Component\Finder\Finder;
 
 /**
  * TarGz strategy
@@ -29,14 +31,38 @@ class TarGz extends ContextAware implements StrategyInterface
      */
     public function deploy($releaseId, $conf)
     {
+        if(file_exists('.automate/release.tar')) {
+            @unlink('.automate/release.tar');
+        }
+
+        if(file_exists('.automate/release.tar.gz')) {
+            @unlink('.automate/release.tar.gz');
+        }
+
         $to = $conf['to'] . '/' . $conf['releases_dir'] . '/' . $releaseId;
         $files = Path::getFilesList($conf['from'], $conf['excludes']);
 
         $tar = new \PharData('.automate/release.tar');
+
+        $output = $this->context->getOutput();
+        $output->writeln('Create archive <info>release.tar.gz</info>');
+        $progress = $this->context->getApp()->getHelperSet()->get('progress');
+        $progress->start($output, $files->count());
+
         foreach($files as $file) {
             $basePath = realpath($conf['from']);
-            $tar->addFile(ltrim($file->getRealPath(), $basePath));
+            $filePath = substr($file->getRealPath(), strlen($basePath));
+            $filePath = ltrim($filePath, '\/ ');
+
+            if($file->isDir()) {
+                $tar->addEmptyDir($filePath);
+            } else {
+                $tar->addFile($file->getRealPath(), $filePath);
+            }
+            $progress->advance();
         }
+        $progress->finish();
+
         $tar->compress(\Phar::GZ);
 
         $tasksManager = $this->context->getTasksManager();
@@ -53,10 +79,6 @@ class TarGz extends ContextAware implements StrategyInterface
             'command' => ' tar zxf release.tar.gz',
             'group' => $conf['group'],
         ));
-
-        @unlink('.automate/release.tar');
-        @unlink('.automate/release.tar.gz');
-
     }
 
     /**

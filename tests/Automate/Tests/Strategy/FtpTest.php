@@ -19,7 +19,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
 
     public function testDeploy()
     {
-        $ftp = new Ftp();
+        $strategy = new Ftp();
         $context = new Context();
         $tasksManager = $this->getMock('Automate\Task\TasksManager');
         $tasksManager->expects($this->any())
@@ -33,11 +33,11 @@ class FtpTest extends \PHPUnit_Framework_TestCase
         ;
 
         $context->setTasksManager($tasksManager);
-        $ftp->setContext($context);
+        $strategy->setContext($context);
 
-        $this->assertEquals('ftp', $ftp->getName());
+        $this->assertEquals('ftp', $strategy->getName());
 
-        $ftp->deploy('1234', array(
+        $strategy->deploy('1234', array(
             'releases_dir' => 'releases_dir',
             'to' => '/path/remote',
             'from' => './',

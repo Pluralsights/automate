@@ -11,12 +11,12 @@
 
 namespace Automate\Context;
 
-use Automate\Automate;
 use Automate\Exception\CommandException;
 use Automate\Local\Local;
 use Automate\Remote\RemotesManager;
 use Automate\Strategy\StrategiesManager;
 use Automate\Task\TasksManager;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -165,9 +165,9 @@ class Context
     }
 
     /**
-     * @param Automate $app
+     * @param Application $app
      */
-    public function setApp(Automate $app)
+    public function setApp(Application $app)
     {
         $this->app = $app;
     }

@@ -42,13 +42,12 @@ class Path
 
         $finder = new Finder();
         $files = $finder
-            ->files()
             ->ignoreUnreadableDirs()
             ->ignoreVCS(true)
             ->ignoreDotFiles(false)
             ->filter(function (\SplFileInfo $file) use ($ignore) {
                 foreach ($ignore as $pattern) {
-                    if (preg_match($pattern, $file->getRealPath())) {
+                    if (preg_match($pattern, self::normalize($file->getRealPath()))) {
                         return false;
                     }
                 }
