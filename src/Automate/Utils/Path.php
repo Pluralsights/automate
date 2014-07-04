@@ -47,7 +47,7 @@ class Path
             ->ignoreDotFiles(false)
             ->filter(function (\SplFileInfo $file) use ($ignore) {
                 foreach ($ignore as $pattern) {
-                    if (preg_match($pattern, static::normalize($file->getRealPath()))) {
+                    if (preg_match($pattern, Path::normalize($file->getRealPath()))) {
                         return false;
                     }
                 }
